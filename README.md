@@ -1,6 +1,6 @@
 # Lukz Financial Analysis Platform
 
-A comprehensive financial analysis platform leveraging the Unusual Whales API to provide actionable market insights.
+A comprehensive financial analysis platform leveraging the Unusual Whales API to provide actionable market insights through real-time data analysis and AI-powered interpretation.
 
 ## Features
 
@@ -8,6 +8,8 @@ A comprehensive financial analysis platform leveraging the Unusual Whales API to
 - AI-powered insights using ChatGPT for instant market interpretation
 - Dynamic visualizations showcasing market trends and opportunities
 - Modern, responsive UI with Tailwind CSS and shadcn/ui components
+- Dark and light theme support with smooth transitions
+- Comprehensive error handling and loading states
 
 ## Project Structure
 
