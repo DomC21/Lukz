@@ -1,7 +1,7 @@
 from typing import Dict, List, Optional
 import random
-from .chatgpt import (
-    generate_insight,
+from .chatgpt import generate_insight
+from .prompts import (
     CONGRESS_TRADES_PROMPT,
     GREEK_FLOW_PROMPT,
     EARNINGS_PROMPT,
