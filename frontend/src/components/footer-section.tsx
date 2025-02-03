@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { FeedbackForm } from "@/components/feedback-form"
 import { ExternalLink, Github } from "lucide-react"
 
 export function FooterSection() {
@@ -78,6 +79,11 @@ export function FooterSection() {
                 </li>
               </ul>
             </div>
+          </div>
+
+          {/* Feedback Form */}
+          <div className="mt-12 mb-8">
+            <FeedbackForm />
           </div>
 
           {/* Copyright */}

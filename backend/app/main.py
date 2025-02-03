@@ -18,6 +18,7 @@ from app.services.market_tide import get_market_tide
 from app.services.earnings import generate_mock_earnings_data
 from app.services.insider_trading import generate_mock_insider_data
 from app.services.premium_flow import generate_mock_premium_flow, get_sector_descriptions
+from app.services.feedback import save_feedback
 from app.services.insights import (
     generate_congress_trades_insight,
     generate_greek_flow_insight,
@@ -188,6 +189,26 @@ async def market_tide_data(
         raise HTTPException(status_code=400, detail="Invalid granularity value")
     try:
         return await get_market_tide(date, interval_5m, lookback_days, granularity)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/feedback")
+@limiter.limit("10/minute")
+async def submit_feedback(
+    request: Request,
+    api_key: str = Depends(verify_api_key),
+    feedback: Dict = Body(...)
+) -> Dict:
+    """Submit user feedback"""
+    try:
+        # Sanitize feedback message
+        feedback["message"] = sanitize_input(feedback.get("message", ""))
+        
+        # Save feedback
+        if save_feedback(feedback):
+            return {"status": "success"}
+        else:
+            raise HTTPException(status_code=500, detail="Failed to save feedback")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
