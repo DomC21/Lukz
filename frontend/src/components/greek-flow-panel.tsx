@@ -1,13 +1,6 @@
 import { useState, useEffect, useCallback } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { useTickerContext } from "@/contexts/ticker-context"
 import {
   LineChart,
   Line,
@@ -48,12 +41,10 @@ export function GreekFlowPanel() {
     gamma: "",
     theta: ""
   })
-  const [selectedTicker, setSelectedTicker] = useState("AAPL")
+  const { globalTicker } = useTickerContext()
   const [insightLoading, setInsightLoading] = useState(true)
   const [error, setError] = useState("")
   const [insight, setInsight] = useState("")
-
-  const tickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN"]
 
   // Fetch Greek flow data
   const fetchData = useCallback(async () => {
@@ -61,7 +52,7 @@ export function GreekFlowPanel() {
     setError("")
     try {
       const params = new URLSearchParams()
-      if (selectedTicker) params.append("ticker", selectedTicker)
+      if (globalTicker) params.append("ticker", globalTicker)
 
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/greek-flow/data?${params.toString()}`
@@ -99,7 +90,7 @@ export function GreekFlowPanel() {
   useEffect(() => {
     fetchData()
     fetchDescriptions()
-  }, [selectedTicker, fetchData, fetchDescriptions])
+  }, [globalTicker, fetchData, fetchDescriptions])
 
   return (
     <Card className="w-full">
@@ -112,29 +103,8 @@ export function GreekFlowPanel() {
             </CardDescription>
           </div>
           <div className="w-full sm:w-48">
-            <Label htmlFor="ticker-select" className="text-brand-gray-200">Stock Ticker</Label>
-            <Select
-              value={selectedTicker}
-              onValueChange={(value) => setSelectedTicker(value)}
-            >
-              <SelectTrigger 
-                id="ticker-select"
-                className="bg-brand-gray-900 border-brand-gray-700 text-brand-gray-100 focus:border-brand-cyan focus:ring-brand-cyan/20"
-              >
-                <SelectValue placeholder="Select stock" />
-              </SelectTrigger>
-              <SelectContent className="bg-brand-gray-900 border-brand-gray-700">
-                {tickers.map((ticker) => (
-                  <SelectItem 
-                    key={ticker} 
-                    value={ticker}
-                    className="text-brand-gray-100 hover:bg-brand-gray-800 focus:bg-brand-gray-800"
-                  >
-                    {ticker}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <p className="text-brand-gray-200 text-sm font-medium mb-2">Current Ticker</p>
+            <p className="text-brand-gray-100 text-lg font-semibold">{globalTicker}</p>
           </div>
         </div>
       </CardHeader>

@@ -8,27 +8,34 @@ import { InsiderTradingPanel } from "./components/insider-trading-panel"
 import { PremiumFlowPanel } from "./components/premium-flow-panel"
 import { FooterSection } from "./components/footer-section"
 import { DevelopmentStatus } from "./components/development-status"
+import { GlobalTickerSearch } from "./components/global-ticker-search"
+import { TickerProvider } from "./contexts/ticker-context"
 
 function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="lukz-theme">
-      <div className="min-h-screen bg-brand-black text-brand-gray-100 transition-colors duration-300">
-        <div className="fixed top-6 right-6 z-50">
-          <ThemeToggle />
-        </div>
-        <main className="container mx-auto px-6 py-12 space-y-16">
-          <OverviewSection />
-          <div id="demo-panels" className="mt-24 space-y-12">
-            <CongressTradesPanel />
-            <GreekFlowPanel />
-            <EarningsPanel />
-            <InsiderTradingPanel />
-            <PremiumFlowPanel />
+      <TickerProvider>
+        <div className="min-h-screen bg-brand-black text-brand-gray-100 transition-colors duration-300">
+          <div className="fixed top-6 right-6 z-50">
+            <ThemeToggle />
           </div>
-          <DevelopmentStatus />
-          <FooterSection />
-        </main>
-      </div>
+          <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+            <GlobalTickerSearch />
+          </div>
+          <main className="container mx-auto px-6 py-12 space-y-16">
+            <OverviewSection />
+            <div id="demo-panels" className="mt-24 space-y-12">
+              <CongressTradesPanel />
+              <GreekFlowPanel />
+              <EarningsPanel />
+              <InsiderTradingPanel />
+              <PremiumFlowPanel />
+            </div>
+            <DevelopmentStatus />
+            <FooterSection />
+          </main>
+        </div>
+      </TickerProvider>
     </ThemeProvider>
   )
 }

@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useTickerContext } from "@/contexts/ticker-context"
 import {
   ResponsiveContainer,
   Tooltip,
@@ -33,6 +34,7 @@ interface TreemapData {
 }
 
 export function InsiderTradingPanel() {
+  const { globalTicker } = useTickerContext()
   const [data, setData] = useState<InsiderTrade[]>([])
   const [selectedRole, setSelectedRole] = useState("all")
   const [selectedType, setSelectedType] = useState("all")
@@ -63,6 +65,7 @@ export function InsiderTradingPanel() {
     setError("")
     try {
       const params = new URLSearchParams()
+      if (globalTicker) params.append("ticker", globalTicker)
       if (selectedRole !== "all") params.append("insider_role", selectedRole)
       if (selectedType !== "all") params.append("trade_type", selectedType)
 
@@ -104,7 +107,7 @@ export function InsiderTradingPanel() {
   // Initial data fetch
   useEffect(() => {
     fetchData()
-  }, [selectedRole, selectedType, fetchData])
+  }, [globalTicker, selectedRole, selectedType, fetchData])
 
   return (
     <Card className="w-full">

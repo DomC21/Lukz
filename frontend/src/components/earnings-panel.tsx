@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useTickerContext } from "@/contexts/ticker-context"
 import {
   ScatterChart,
   Scatter,
@@ -30,6 +31,7 @@ interface EarningsData {
 }
 
 export function EarningsPanel() {
+  const { globalTicker } = useTickerContext()
   const [data, setData] = useState<EarningsData[]>([])
   const [selectedSector, setSelectedSector] = useState<string>("all")
   const [surpriseType, setSurpriseType] = useState<string>("all")
@@ -53,6 +55,7 @@ export function EarningsPanel() {
     setError("")
     try {
       const params = new URLSearchParams()
+      if (globalTicker) params.append("ticker", globalTicker)
       if (selectedSector !== "all") params.append("sector", selectedSector)
       if (surpriseType !== "all") params.append("surprise_type", surpriseType)
 
@@ -78,7 +81,7 @@ export function EarningsPanel() {
   // Initial data fetch
   useEffect(() => {
     fetchData()
-  }, [selectedSector, surpriseType, fetchData])
+  }, [globalTicker, selectedSector, surpriseType, fetchData])
 
   return (
     <Card className="w-full">
