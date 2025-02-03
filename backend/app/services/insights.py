@@ -1,5 +1,6 @@
 from typing import Dict, List, Optional
 import random
+from .cache import cache
 from .chatgpt import generate_insight
 from .prompts import (
     CONGRESS_TRADES_PROMPT,
@@ -399,26 +400,37 @@ def generate_earnings_insight(data: List[Dict]) -> str:
             return "Insufficient data to generate meaningful insights."
 
 def calculate_correlation(pairs: List[tuple]) -> float:
-    """Calculate Pearson correlation coefficient"""
+    """Calculate Pearson correlation coefficient with optimized calculations"""
     if not pairs:
         return 0
     
     n = len(pairs)
-    x = [p[0] for p in pairs]
-    y = [p[1] for p in pairs]
-    
-    mean_x = sum(x) / n
-    mean_y = sum(y) / n
-    
-    variance_x = sum((xi - mean_x) ** 2 for xi in x)
-    variance_y = sum((yi - mean_y) ** 2 for yi in y)
-    
-    covariance = sum((xi - mean_x) * (yi - mean_y) for xi, yi in zip(x, y))
-    
-    if variance_x == 0 or variance_y == 0:
+    if n == 0:
         return 0
         
-    return covariance / (variance_x * variance_y) ** 0.5
+    # Single pass calculation for better performance
+    sum_x = sum_y = sum_xx = sum_yy = sum_xy = 0
+    
+    for x, y in pairs:
+        sum_x += x
+        sum_y += y
+        sum_xx += x * x
+        sum_yy += y * y
+        sum_xy += x * y
+    
+    # Calculate means
+    mean_x = sum_x / n
+    mean_y = sum_y / n
+    
+    # Calculate variances and covariance
+    var_x = (sum_xx / n) - (mean_x * mean_x)
+    var_y = (sum_yy / n) - (mean_y * mean_y)
+    cov_xy = (sum_xy / n) - (mean_x * mean_y)
+    
+    if var_x <= 0 or var_y <= 0:
+        return 0
+        
+    return cov_xy / (var_x * var_y) ** 0.5
 
 def generate_insider_trading_insight(data: List[Dict]) -> str:
     """Generate insights for insider trading data using ChatGPT"""
@@ -573,7 +585,12 @@ def generate_insider_trading_insight(data: List[Dict]) -> str:
             return "Insufficient data to generate meaningful insights."
 
 def generate_premium_flow_insight(data: List[Dict], historical_stats: Dict = None, is_intraday: bool = False) -> str:
-    """Generate insights for premium flow data with historical context"""
+    """Generate insights for premium flow data with historical context and caching"""
+    # Try to get cached insight
+    cache_key = f"premium_flow:{hash(str(data))}"
+    cached_insight = cache.get(cache_key)
+    if cached_insight:
+        return cached_insight
     if not data or len(data) == 0:
         if historical_stats:
             max_premium = max(
@@ -665,9 +682,7 @@ def generate_premium_flow_insight(data: List[Dict], historical_stats: Dict = Non
             else:
                 ts["put_premium"] += premium
                 
-            # Debug logging
-            print(f"Processing flow: time_key={time_key}, premium={premium}, volume={volume}, type={option_type}")
-            print(f"Updated time series: {ts}")
+            # Removed debug logging for performance
         
         # Calculate final metrics with sector comparisons
         sectors_list = [
@@ -822,7 +837,11 @@ def generate_premium_flow_insight(data: List[Dict], historical_stats: Dict = Non
         parts.append(f"Net premium change of ${abs(net_premium)/1000000:.1f}M {momentum_ref}")
         
         # Join all parts with periods
-        return ". ".join(parts) + "."
+        insight = ". ".join(parts) + "."
+        
+        # Cache the insight for 5 minutes
+        cache.set(cache_key, insight, ttl_seconds=300)
+        return insight
     except Exception as e:
         print(f"Error generating insight: {str(e)}")
         return "Error generating insight. Please try again."
