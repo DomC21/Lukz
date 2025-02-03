@@ -170,7 +170,12 @@ export function PremiumFlowPanel() {
       params.append("is_intraday", showIntraday.toString())
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/premium-flow/data?${params.toString()}`
+        `${import.meta.env.VITE_API_URL}/api/premium-flow/data?${params.toString()}`,
+        {
+          headers: {
+            'X-API-Key': import.meta.env.VITE_API_KEY
+          }
+        }
       )
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)

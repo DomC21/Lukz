@@ -27,6 +27,7 @@ export function FeedbackForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-API-Key": import.meta.env.VITE_API_KEY,
         },
         body: JSON.stringify({ message }),
       })
@@ -40,7 +41,7 @@ export function FeedbackForm() {
         description: "Thank you for your feedback!",
       })
       setMessage("")
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to submit feedback. Please try again.",

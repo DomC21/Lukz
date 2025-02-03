@@ -70,7 +70,12 @@ export function InsiderTradingPanel() {
       if (selectedType !== "all") params.append("trade_type", selectedType)
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/insider-trading/data?${params.toString()}`
+        `${import.meta.env.VITE_API_URL}/api/insider-trading/data?${params.toString()}`,
+        {
+          headers: {
+            'X-API-Key': import.meta.env.VITE_API_KEY
+          }
+        }
       )
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -86,7 +91,7 @@ export function InsiderTradingPanel() {
     } finally {
       setInsightLoading(false)
     }
-  }, [selectedRole, selectedType, setInsightLoading, setError, setData, setInsight])
+  }, [selectedRole, selectedType, globalTicker, setInsightLoading, setError, setData, setInsight])
 
   // Process data for treemap
   const processDataForTreemap = (): TreemapData[] => {

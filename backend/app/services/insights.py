@@ -7,7 +7,8 @@ from .prompts import (
     GREEK_FLOW_PROMPT,
     EARNINGS_PROMPT,
     INSIDER_TRADING_PROMPT,
-    PREMIUM_FLOW_PROMPT
+    PREMIUM_FLOW_PROMPT,
+    MARKET_TIDE_PROMPT
 )
 
 def generate_congress_trades_insight(trades: List[Dict]) -> str:
@@ -49,9 +50,13 @@ def generate_congress_trades_insight(trades: List[Dict]) -> str:
         for trade in trades:
             ticker = trade["ticker"]
             member = trade["reporter"]
-            amount_str = trade["amounts"]
+            amount_str = trade.get("amounts", "")
             # Convert amount range to average value
-            amount = parse_amount_range(amount_str)
+            try:
+                amount = parse_amount_range(amount_str)
+            except Exception:
+                # If parsing fails, try direct amount field
+                amount = float(trade.get("amount", 0))
             trade_type = trade["txn_type"].lower()
             
             # Track large trades (>$1M)

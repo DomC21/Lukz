@@ -55,7 +55,12 @@ export function GreekFlowPanel() {
       if (globalTicker) params.append("ticker", globalTicker)
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/greek-flow/data?${params.toString()}`
+        `${import.meta.env.VITE_API_URL}/api/greek-flow/data?${params.toString()}`,
+        {
+          headers: {
+            'X-API-Key': import.meta.env.VITE_API_KEY
+          }
+        }
       )
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -71,13 +76,18 @@ export function GreekFlowPanel() {
     } finally {
       setInsightLoading(false)
     }
-  }, [selectedTicker, setInsightLoading, setError, setData, setInsight])
+  }, [globalTicker, setInsightLoading, setError, setData, setInsight])
 
   // Fetch Greek descriptions
   const fetchDescriptions = useCallback(async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/greek-flow/descriptions`
+        `${import.meta.env.VITE_API_URL}/api/greek-flow/descriptions`,
+        {
+          headers: {
+            'X-API-Key': import.meta.env.VITE_API_KEY
+          }
+        }
       )
       const data = await response.json()
       setDescriptions(data)

@@ -29,7 +29,8 @@ async def get_greek_flow(
             "insight": "Using mock data for development"
         }
 
-from .chatgpt import generate_insight, GREEK_FLOW_PROMPT
+from .chatgpt import generate_insight
+from .prompts import GREEK_FLOW_PROMPT
 
 def generate_greek_flow_insight(data: List[Dict]) -> str:
     """Generate insights for Greek flow data using ChatGPT"""

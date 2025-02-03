@@ -91,7 +91,8 @@ async def get_market_tide(
             "insight": generate_market_tide_insight(mock_data, granularity)
         }
 
-from .chatgpt import generate_insight, MARKET_TIDE_PROMPT
+from .chatgpt import generate_insight
+from .prompts import MARKET_TIDE_PROMPT
 
 def generate_market_tide_insight(data: List[Dict], historical_stats: Dict = None, granularity: str = "minute") -> str:
     """Generate insights for market tide data using ChatGPT with historical context"""

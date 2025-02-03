@@ -3,10 +3,7 @@ import { useTickerContext } from "@/contexts/ticker-context"
 import { Input } from "@/components/ui/input"
 import {
   Command,
-  CommandDialog,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
@@ -15,7 +12,7 @@ import { Search } from "lucide-react"
 const commonTickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "META", "NVDA", "AMD", "INTC", "JPM"]
 
 export function GlobalTickerSearch() {
-  const { globalTicker, setGlobalTicker } = useTickerContext()
+  const { setGlobalTicker } = useTickerContext()
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState("")
   const [suggestions, setSuggestions] = useState<string[]>([])

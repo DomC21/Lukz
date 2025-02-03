@@ -60,7 +60,12 @@ export function EarningsPanel() {
       if (surpriseType !== "all") params.append("surprise_type", surpriseType)
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/earnings/data?${params.toString()}`
+        `${import.meta.env.VITE_API_URL}/api/earnings/data?${params.toString()}`,
+        {
+          headers: {
+            'X-API-Key': import.meta.env.VITE_API_KEY
+          }
+        }
       )
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -76,7 +81,7 @@ export function EarningsPanel() {
     } finally {
       setInsightLoading(false)
     }
-  }, [selectedSector, surpriseType, setInsightLoading, setError, setData, setInsight])
+  }, [selectedSector, surpriseType, globalTicker, setInsightLoading, setError, setData, setInsight])
 
   // Initial data fetch
   useEffect(() => {

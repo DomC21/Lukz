@@ -73,7 +73,12 @@ export function MarketTidePanel() {
       params.append("granularity", granularity)
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/market-tide/data?${params.toString()}`
+        `${import.meta.env.VITE_API_URL}/api/market-tide/data?${params.toString()}`,
+        {
+          headers: {
+            'X-API-Key': import.meta.env.VITE_API_KEY
+          }
+        }
       )
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)

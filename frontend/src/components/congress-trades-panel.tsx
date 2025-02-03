@@ -64,7 +64,12 @@ export function CongressTradesPanel() {
       if (endDate) params.append("end_date", endDate)
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/congress/trades?${params.toString()}`
+        `${import.meta.env.VITE_API_URL}/api/congress/trades?${params.toString()}`,
+        {
+          headers: {
+            'X-API-Key': import.meta.env.VITE_API_KEY
+          }
+        }
       )
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)

@@ -31,10 +31,10 @@ def generate_mock_congress_trades(
             
         trades.append({
             "ticker": random.choice(tickers),
-            "congress_member": random.choice(members),
-            "trade_type": random.choice(trade_types),
-            "amount": random.randint(10000, 1000000),
-            "trade_date": trade_date,
+            "reporter": random.choice(members),
+            "txn_type": random.choice(trade_types),
+            "amounts": f"${random.randint(10000, 1000000):,}",
+            "transaction_date": trade_date,
             "disclosure_date": (datetime.strptime(trade_date, "%Y-%m-%d") + timedelta(days=random.randint(1, 10))).strftime("%Y-%m-%d")
         })
     

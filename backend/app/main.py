@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, HTTPException, Request, Depends
+from fastapi import FastAPI, Query, HTTPException, Request, Depends, Body
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.security import APIKeyHeader
@@ -58,7 +58,6 @@ async def healthz():
 async def congress_trades(
     request: Request,
     api_key: str = Depends(verify_api_key),
-async def congress_trades(
     ticker: Optional[str] = Query(None, description="Filter by stock ticker"),
     congress_member: Optional[str] = Query(None, description="Filter by congress member name"),
     start_date: Optional[str] = Query(None, description="Start date (YYYY-MM-DD)"),
