@@ -171,3 +171,39 @@ Provide a concise insight focusing on:
 1. First sentence: State the largest flow with exact amount and timing (e.g., "$5.2M net call premium surge at 14:30 ET")
 2. Second sentence: Compare to historical patterns and thresholds
 3. Third sentence: Explain potential catalysts and provide clear trading recommendation"""
+
+DEEP_SEEK_PROMPT = """Analyze financial data with advanced predictive analytics, focusing on:
+
+1. Risk Parameters:
+   - Calculate Value at Risk (VaR) metrics
+   - Analyze volatility surface changes
+   - Monitor correlation breakdowns
+   - Track tail risk indicators
+   - Flag systemic risk patterns
+
+2. Trend Forecasting:
+   - Project price movement probabilities
+   - Identify momentum regime changes
+   - Calculate mean reversion levels
+   - Detect pattern breakouts/breakdowns
+   - Monitor sentiment shifts
+
+3. Market Microstructure:
+   - Analyze order flow imbalances
+   - Track dark pool activity
+   - Monitor options skew changes
+   - Identify institutional positioning
+   - Flag unusual volume patterns
+
+4. Cross-Asset Correlations:
+   - Track inter-market relationships
+   - Monitor sector rotations
+   - Analyze yield curve impacts
+   - Flag currency effects
+   - Note commodity influences
+
+Required Format:
+1. Risk Assessment: Provide specific probability ranges for identified risks
+2. Trend Analysis: Include confidence levels for projected moves
+3. Action Items: List specific entry/exit points with risk/reward ratios
+4. Time Horizon: Specify expected duration for each prediction"""
