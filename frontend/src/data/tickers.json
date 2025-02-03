@@ -1,0 +1,29 @@
+{
+  "tickers": [
+    "AAPL",
+    "MSFT",
+    "GOOGL",
+    "AMZN",
+    "META",
+    "NVDA",
+    "TSLA",
+    "JPM",
+    "BAC",
+    "WFC",
+    "GS",
+    "MS",
+    "JNJ",
+    "PFE",
+    "MRK",
+    "ABBV",
+    "UNH",
+    "XOM",
+    "CVX",
+    "COP",
+    "EOG",
+    "SLB",
+    "SPY",
+    "QQQ",
+    "IWM"
+  ]
+}
