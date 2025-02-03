@@ -5,10 +5,15 @@ node_modules
 
 # Environment variables
 .env
+.env.*
+!.env.example
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Sensitive data
+data/feedback/*.json
 
 # Build outputs
 dist
