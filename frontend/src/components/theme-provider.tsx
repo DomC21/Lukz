@@ -41,17 +41,18 @@ export function ThemeProvider({
     root.style.setProperty('--brand-navy', '#0F172A')
     root.style.setProperty('--brand-black', '#000000')
     root.style.setProperty('--brand-white', '#FFFFFF')
+    root.style.setProperty('--brand-gold', '#FFD700')
     
-    // Set additional theme variables
-    root.style.setProperty('--brand-gray-100', '#F5F5F5')
-    root.style.setProperty('--brand-gray-200', '#E5E5E5')
-    root.style.setProperty('--brand-gray-300', '#D4D4D4')
-    root.style.setProperty('--brand-gray-400', '#A3A3A3')
-    root.style.setProperty('--brand-gray-500', '#737373')
-    root.style.setProperty('--brand-gray-600', '#525252')
-    root.style.setProperty('--brand-gray-700', '#404040')
-    root.style.setProperty('--brand-gray-800', '#262626')
-    root.style.setProperty('--brand-gray-900', '#171717')
+    // Set gray scale
+    root.style.setProperty('--brand-gray-100', '#F8FAFC')
+    root.style.setProperty('--brand-gray-200', '#E2E8F0')
+    root.style.setProperty('--brand-gray-300', '#CBD5E1')
+    root.style.setProperty('--brand-gray-400', '#94A3B8')
+    root.style.setProperty('--brand-gray-500', '#64748B')
+    root.style.setProperty('--brand-gray-600', '#475569')
+    root.style.setProperty('--brand-gray-700', '#334155')
+    root.style.setProperty('--brand-gray-800', '#1E293B')
+    root.style.setProperty('--brand-gray-900', '#0F172A')
 
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
@@ -64,19 +65,23 @@ export function ThemeProvider({
       if (systemTheme === "dark") {
         root.style.setProperty('--background', 'var(--brand-black)')
         root.style.setProperty('--foreground', 'var(--brand-gray-100)')
-        root.style.setProperty('--primary', 'var(--brand-teal)')
+        root.style.setProperty('--primary', 'var(--brand-gold)')
         root.style.setProperty('--muted', 'var(--brand-gray-800)')
         root.style.setProperty('--muted-foreground', 'var(--brand-gray-400)')
-        root.style.setProperty('--accent', 'var(--brand-cyan)')
+        root.style.setProperty('--accent', 'var(--brand-gold)')
         root.style.setProperty('--accent-foreground', 'var(--brand-navy)')
+        root.style.setProperty('--input-background', 'var(--brand-gray-900)')
+        root.style.setProperty('--input-foreground', 'var(--brand-gray-100)')
       } else {
         root.style.setProperty('--background', 'var(--brand-white)')
         root.style.setProperty('--foreground', 'var(--brand-black)')
-        root.style.setProperty('--primary', 'var(--brand-teal)')
+        root.style.setProperty('--primary', 'var(--brand-gold)')
         root.style.setProperty('--muted', 'var(--brand-gray-100)')
         root.style.setProperty('--muted-foreground', 'var(--brand-gray-600)')
-        root.style.setProperty('--accent', 'var(--brand-cyan)')
+        root.style.setProperty('--accent', 'var(--brand-gold)')
         root.style.setProperty('--accent-foreground', 'var(--brand-navy)')
+        root.style.setProperty('--input-background', 'var(--brand-white)')
+        root.style.setProperty('--input-foreground', 'var(--brand-black)')
       }
       return
     }

@@ -17,6 +17,7 @@ module.exports = {
           navy: '#0F172A',
           black: '#000000',
           white: '#FFFFFF',
+          gold: '#FFD700',
           gray: {
             100: '#F8FAFC',
             200: '#E2E8F0',
